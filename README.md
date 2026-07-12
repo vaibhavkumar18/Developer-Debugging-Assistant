@@ -236,12 +236,6 @@ The assistant supports uploading multiple files.
 
 # 🚀 Getting Started
 
-## Clone Repository
-
-```bash
-git clone https://github.com/vaibhavkumar18/Developer-Debugging-Assistant/
-```
-
 ---
 
 # Frontend Setup
@@ -269,7 +263,7 @@ index.html
 ```bash
 cd backend
 ```
-Cone The Repo
+## Clone The Repo
 ```bash
 git clone https://github.com/vaibhavkumar18/Developer-Debugging-Assistant-be
 ```
