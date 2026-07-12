@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Developer Debugging Copilot</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div class="app-layout">
+      <!-- Sidebar Panel: ChatGPT Style History and Actions -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="brand-mark">
+            <span class="brand-glyph">◆</span>
+            <span class="brand-name">Debug<em>Copilot</em></span>
+          </div>
+          <button id="newChatBtn" class="btn btn-new-chat">
+            <span class="btn-icon">＋</span>
+            New Case Triage
+          </button>
+        </div>
+        <div class="history-container">
+          <span class="section-title">Today</span>
+          <div class="history-list" id="historyList">
+            <div class="history-item active" id="activeCaseItem">
+              <span class="item-icon">📁</span>
+              <span class="item-text">Active Triage Case</span>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-footer">
+          <div class="user-profile">
+            <div class="avatar">ER</div>
+            <div class="profile-info">
+              <span class="username">Developer Desk</span>
+              <span class="status-indicator-dot online"></span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Workspace Arena -->
+      <main class="main-content">
+        <!-- Top Navigation / Case Meta Area -->
+        <header class="chat-header">
+          <div class="case-meta">
+            <div class="case-brand">
+              <span class="brand-badge">ERROR TRIAGE</span>
+              <h1>Incident Debug Desk</h1>
+            </div>
+            <div class="meta-indicators">
+              <div class="case-id">
+                <span class="case-label">CASE ID:</span>
+                <span class="case-val" id="caseIdValue">—</span>
+              </div>
+              <div class="status-pill" id="statusPill" data-state="idle">
+                <span class="status-dot"></span>
+                <span class="status-text">Idle</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Conversational Message Timeline Stream -->
+        <section class="chat-timeline" id="chatTimeline">
+          <!-- Welcome Intro Message Card -->
+          <div class="welcome-box" id="welcomeBox">
+            <div class="icon-wrap">⚠️</div>
+            <h2>Let's Isolate the Crash</h2>
+            <p>
+              Paste your error outputs, console stack traces, or active
+              controller logs below — or attach the offending files directly.
+              The triage engine will extract the stack, review context
+              sufficiency, and build a diagnostic plan.
+            </p>
+          </div>
+          <!-- Dynamic Chat Bubbles will append here -->
+        </section>
+
+        <!-- Persistent Bottom Typing Area -->
+        <footer class="typing-container">
+          <div class="alert-banner hidden" id="alertBanner"></div>
+
+          <form id="chatForm" class="chat-form">
+            <!-- Attached file chips render here -->
+            <div class="file-chip-row hidden" id="fileChipRow"></div>
+
+            <div class="input-area-wrapper">
+              <textarea
+                id="chatInput"
+                placeholder="Paste code snippet, errors, or answers to clarification questions here... (Enter to Send, Shift+Enter for new line)"
+              ></textarea>
+              <div class="chat-controls">
+                <div class="controls-left">
+                  <button
+                    type="button"
+                    class="icon-btn"
+                    id="attachBtn"
+                    title="Attach files (.js, .py, .log, .env, etc.)"
+                  >
+                    📎
+                  </button>
+                  <input
+                    type="file"
+                    id="fileInput"
+                    class="visually-hidden"
+                    multiple
+                    accept=".js,.jsx,.ts,.tsx,.py,.java,.cpp,.c,.h,.cs,.go,.rb,.php,.json,.env,.log,.txt,.md,.yml,.yaml,.sql,.html,.css"
+                  />
+                  <button
+                    type="button"
+                    class="ctrl-btn"
+                    id="clearCaseBtn"
+                    title="Reset current triage pipeline"
+                  >
+                    Clear Session
+                  </button>
+                </div>
+                <button type="submit" id="sendBtn" class="btn btn-primary">
+                  Run Triage
+                  <span class="btn-arrow">→</span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </footer>
+      </main>
+
+      <!-- Right Panel: Execution Pipeline Visual Tracker -->
+      <aside class="pipeline-rail">
+        <h3 class="panel-title">Engine Rail</h3>
+        <ol class="pipeline" id="pipeline">
+          <li class="stage" data-stage="intake" data-status="pending">
+            <span class="stage-index">01</span>
+            <span class="stage-node"><span class="stage-dot"></span></span>
+            <div class="stage-body">
+              <span class="stage-label">Intake Extraction</span>
+              <span class="stage-code">PENDING</span>
+            </div>
+          </li>
+          <li class="stage" data-stage="triage" data-status="pending">
+            <span class="stage-index">02</span>
+            <span class="stage-node"><span class="stage-dot"></span></span>
+            <div class="stage-body">
+              <span class="stage-label">Context sufficiency</span>
+              <span class="stage-code">PENDING</span>
+            </div>
+          </li>
+          <li class="stage" data-stage="clarify" data-status="skip">
+            <span class="stage-index">03</span>
+            <span class="stage-node"><span class="stage-dot"></span></span>
+            <div class="stage-body">
+              <span class="stage-label">Clarify Questions</span>
+              <span class="stage-code">—</span>
+            </div>
+          </li>
+          <li class="stage" data-stage="diagnosis" data-status="pending">
+            <span class="stage-index">04</span>
+            <span class="stage-node"><span class="stage-dot"></span></span>
+            <div class="stage-body">
+              <span class="stage-label">RAG & Diagnosis</span>
+              <span class="stage-code">PENDING</span>
+            </div>
+          </li>
+        </ol>
+        <div class="pipeline-note">
+          <p>
+            Every incident moves from Intake parsing, context adequacy
+            inspection, to direct code-level diagnosis rendering.
+          </p>
+        </div>
+      </aside>
+    </div>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
