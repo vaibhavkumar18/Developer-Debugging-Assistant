@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL;
+
 document.addEventListener("DOMContentLoaded", () => {
   const chatForm = document.getElementById("chatForm");
   const chatInput = document.getElementById("chatInput");
@@ -493,7 +493,7 @@ document.addEventListener("DOMContentLoaded", () => {
         formData.append("files", file, file.name);
       });
 
-      const response = await fetch(API_URL + "/chat", {
+      const response = await fetch(`${API_URL}/chat`, {
         method: "POST",
         body: formData,
       });
